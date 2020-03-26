@@ -1,92 +1,31 @@
-﻿using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices.ComTypes;
-
-namespace MonadSample
+﻿namespace MonadSample
 {
-    internal class Either<T, TE> where TE : Exception
+    public static class Program
     {
-        private readonly Exception _error;
-        private readonly T _value;
-
-        private Either(T value)
+        public static void Main()
         {
-            _value = value;
-            _error = default(TE);
+            var customerId = 10;
+
+            var customerName =
+                customerId.ToResult()
+                    .Bind(GetCustomerById)
+                    .Bind(GetCustomerName);
         }
 
-        private Either(Exception error)
+        private static Result<string> GetCustomerName(Customer customer)
         {
-            _value = default(T);
-            _error = error;
+            return string.Join(" ", customer.Name, customer.Surname);
         }
 
-        public static Either<T, TE> Pure(T value)
+        public static Result<Customer> GetCustomerById(int id)
         {
-            return new Either<T, TE>(value);
+            return new Customer {Name = "John", Surname = "Doe"};
         }
 
-        public static Either<T2, TE> Bind<T2>(Either<T, TE> mValue, Func<T, Either<T2, TE>> action)
+        public class Customer
         {
-            if (mValue._error != null)
-            {
-                return new Either<T2, TE>(mValue._error);
-            }
-
-            try
-            {
-                return action(mValue._value);
-            }
-            catch (Exception exception)
-            {
-                return new Either<T2, TE>(exception);
-            }
-        }
-    }
-
-    public class DbEntity
-    {
-
-    }
-
-    public class Entity
-    {
-
-    }
-
-    public class WorkFlow
-    {
-        void Go()
-        {
-            var intValue = 10;
-            var mIntValue = Either<int, Exception>.Pure(intValue);
-            var eResult = Either<int, Exception>
-                .Bind(Either<int, Exception>.Pure(intValue),
-                GetItemFromDb);
-            
-            
-            
-            // arg => { return Either<DbEntity, Exception>.Bind(GetItemFromDb(arg)); }
-
-            
-
-
-
-
-        }
-
-        private Either<DbEntity, Exception> GetItemFromDb(int i)
-        {
-            Debug.Write($"Get item from db:{i}");
-            return Either<DbEntity, Exception>.Pure(new DbEntity());
-        }
-    }
-
-    internal class Program
-    {
-        private static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
+            public string Name { get; set; }
+            public string Surname { get; set; }
         }
     }
 }
