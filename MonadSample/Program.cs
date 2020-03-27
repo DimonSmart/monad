@@ -1,4 +1,6 @@
-﻿namespace MonadSample
+﻿using ReturnType;
+
+namespace MonadSample
 {
     public static class Program
     {
@@ -7,7 +9,8 @@
             var customerId = 10;
 
             var customerName =
-                customerId.ToResult()
+                customerId
+                    .WrapValue()
                     .Bind(GetCustomerById)
                     .Bind(GetCustomerName);
         }

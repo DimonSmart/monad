@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonadSample
+namespace ReturnType
 {
     public static class ResultExtensions
     {
@@ -18,7 +18,7 @@ namespace MonadSample
             }
         }
 
-        public static Result<T> ToResult<T>(this T value)
+        public static Result<T> WrapValue<T>(this T value)
         {
             return new Result<T>(value);
         }

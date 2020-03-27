@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonadSample
+namespace ReturnType
 {
     public class Error : IError
     {

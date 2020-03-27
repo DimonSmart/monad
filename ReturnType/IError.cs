@@ -1,4 +1,4 @@
-﻿namespace MonadSample
+﻿namespace ReturnType
 {
     public interface IError
     {
