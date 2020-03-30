@@ -6,7 +6,7 @@ namespace ReturnType
     {
         public static Result<T2> Bind<T1, T2>(this Result<T1> value, Func<T1, Result<T2>> onSuccess)
         {
-            if (value.State == Result<T1>.ValueType.Error) return Result<T2>.FromError(value.Error);
+            if (value.State == Result<T1>.ResultType.Error) return Result<T2>.FromError(value.Error);
 
             try
             {
@@ -14,7 +14,7 @@ namespace ReturnType
             }
             catch (Exception exception)
             {
-                return Result<T2>.FromError(new Error(exception));
+                return Result<T2>.FromError(new ExceptionBasedError(exception));
             }
         }
 

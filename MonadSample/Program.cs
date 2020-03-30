@@ -1,4 +1,5 @@
-﻿using ReturnType;
+﻿using System;
+using ReturnType;
 
 namespace MonadSample
 {
@@ -13,6 +14,8 @@ namespace MonadSample
                     .WrapValue()
                     .Bind(GetCustomerById)
                     .Bind(GetCustomerName);
+
+            Console.WriteLine($"Customer name:{customerName}");
         }
 
         private static Result<string> GetCustomerName(Customer customer)
