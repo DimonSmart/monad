@@ -6,6 +6,7 @@
 		<Company>DimonSmart</Company>
 		<PackageTags>Monad, Asp net Return Type, Railway programming</PackageTags>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>1.0.0.1</Version>
 	</PropertyGroup>
 
 </Project>
