@@ -5,7 +5,7 @@ Sample for simple railway programming technique
 // Retun type will be updated soon
 string GetCustomerName(int customerId)
 return
-    customerId.ToResult()
+     customerId.WrapValue()
     .Bind(GetCustomerById)
     .Bind(GetCustomerName);
 ```
