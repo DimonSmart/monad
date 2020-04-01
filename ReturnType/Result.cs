@@ -1,15 +1,8 @@
 ﻿namespace ReturnType
 {
-    public sealed class Result<T>
+    public sealed class Result<T> : ResultBase
     {
-        public enum ResultType
-        {
-            Value,
-            Error
-        }
-
         public readonly IError Error;
-
         public readonly T Value;
 
         private Result(T value, IError error, ResultType successStatus)
@@ -19,13 +12,12 @@
             State = successStatus;
         }
 
-        public Result(T value)
-        {
-            Value = value;
-            State = ResultType.Value;
-        }
-
         public ResultType State { get; }
+
+        public override string ToString()
+        {
+            return ExtractValue(this).ToString();
+        }
 
         public static Result<T> FromError(IError error)
         {
@@ -39,9 +31,18 @@
 
         public static implicit operator Result<T>(T value)
         {
-            return new Result<T>(value);
+            return new Result<T>(value, null, ResultType.Value);
         }
 
-       
+        public static implicit operator T(Result<T> value)
+        {
+            return ExtractValue(value);
+        }
+
+        private static T ExtractValue(Result<T> value)
+        {
+            if (value.State == ResultType.Error) throw value.Error.GetException();
+            return value.Value;
+        }
     }
 }

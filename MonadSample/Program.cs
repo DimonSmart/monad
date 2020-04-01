@@ -9,13 +9,12 @@ namespace MonadSample
         {
             var customerId = 10;
 
-            var customerName =
-                customerId
-                    .WrapValue()
+            var customerNameResult =
+                customerId.Wrap()
                     .Bind(GetCustomerById)
                     .Bind(GetCustomerName);
 
-            Console.WriteLine($"Customer name:{customerName}");
+            Console.WriteLine($"Customer name:{customerNameResult}");
         }
 
         private static Result<string> GetCustomerName(Customer customer)
